@@ -23,6 +23,9 @@ io.on('connection', socket => {
     socket.on('joinRoom', ({ username, room }) => {
         // can check if room available here
         const user = userJoin(socket.id, username, room);
+        console.log(`User's room is ${room}`)
+
+        // EVERYONE IS LITERALLY JOINING ROOM UNDEFINED THATS WHY WE CANT OUTPUT IT ON FRONTEND...
 
         socket.join(user.room)
         // Welcome current user
