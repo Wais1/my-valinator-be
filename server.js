@@ -19,20 +19,6 @@ const rooms = []
 // Run when client connects
 io.on('connection', socket => {
     console.log('User connected')
-    // Test pause to all
-    socket.on('pause', ({ username, room }) => {
-        // sending to all clients except sender
-        // socket.broadcast.emit('pause', "this is a test");
-
-        // Broascast to all including client to test on same client.
-        // io.sockets.emit('pause', '');
-
-        console.log(`A user requested to pause`)
-        const randUsername = getRandomUsername()
-
-        // SEND ONLY TO ROOM. TEST
-        socket.broadcast.to(user.room).emit('pause', "test pause");
-    })
 
     socket.on('joinRoom', ({ username, room }) => {
         // can check if room available here
@@ -66,6 +52,22 @@ io.on('connection', socket => {
         } catch (error) {
             console.log(error)
         }
+    })
+
+    // Test pause to all
+    socket.on('pause', ({ username, room }) => {
+        const user = getCurrentUser(socket.id)
+
+        // sending to all clients except sender
+        // socket.broadcast.emit('pause', "this is a test");
+
+        // Broascast to all including client to test on same client.
+        // io.sockets.emit('pause', '');
+
+        console.log(`A user requested to pause`)
+
+        // SEND ONLY TO ROOM. TEST
+        socket.broadcast.to(user.room).emit('pause', "test pause");
     })
 
     // Listen for student feelings
