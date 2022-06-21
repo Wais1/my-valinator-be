@@ -74,7 +74,7 @@ io.on('connection', socket => {
     })
 
     // change video to all
-     socket.on('changeVideo', ({ link }) => {
+     socket.on('changeVideo', (link) => {
         const user = getCurrentUser(socket.id)
 
         console.log(`A user requested to change videos with this link ${link}`)
