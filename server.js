@@ -18,7 +18,7 @@ const rooms = []
 // Run when client connects
 io.on('connection', socket => {
     console.log('User connected')
-    // Test pause to all
+    //  pause to all
     socket.on('pause', ({ username, room }) => {
         // sending to all clients except sender
         socket.broadcast.emit('pause', "this is a test");
@@ -27,6 +27,17 @@ io.on('connection', socket => {
         // io.sockets.emit('pause', '');
 
         console.log(`A user requested to pause`)
+    })
+
+    // change video to all
+    socket.on('changeVideo', ({ link }) => {
+        // sending to all clients except sender
+        socket.broadcast.emit('changeVideo', link );
+
+        // Broascast to all including client to test on same client.
+        // io.sockets.emit('pause', '');
+
+        console.log(`A user requested to change videos with this link ${link}`)
     })
 
     socket.on('joinRoom', ({ username, room }) => {
