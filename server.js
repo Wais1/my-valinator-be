@@ -19,30 +19,6 @@ const rooms = []
 // Run when client connects
 io.on('connection', socket => {
     console.log('User connected')
-<<<<<<< HEAD
-=======
-    //  pause to all
-    socket.on('pause', ({ username, room }) => {
-        // sending to all clients except sender
-        socket.broadcast.emit('pause', "this is a test");
-
-        // Broascast to all including client to test on same client.
-        // io.sockets.emit('pause', '');
-
-        console.log(`A user requested to pause`)
-    })
->>>>>>> 9c0bea6a84cbfb24e7b22561fe384e1a3280f032
-
-    // change video to all
-    socket.on('changeVideo', ({ link }) => {
-        // sending to all clients except sender
-        socket.broadcast.emit('changeVideo', link );
-
-        // Broascast to all including client to test on same client.
-        // io.sockets.emit('pause', '');
-
-        console.log(`A user requested to change videos with this link ${link}`)
-    })
 
     socket.on('joinRoom', ({ username, room }) => {
         // can check if room available here
@@ -97,6 +73,16 @@ io.on('connection', socket => {
         socket.broadcast.to(user.room).emit('pause', "test pause");
     })
 
+    // change video to all
+     socket.on('changeVideo', ({ link }) => {
+        const user = getCurrentUser(socket.id)
+
+        console.log(`A user requested to change videos with this link ${link}`)
+
+        // sending to all clients except sender
+        socket.broadcast.to(user.room).emit('changeVideo', link );
+    })
+
     // Listen for student feelings
     socket.on('feeling', (val) => {
         const user = getCurrentUser(socket.id)
@@ -127,10 +113,7 @@ io.on('connection', socket => {
     })
 })
 
-<<<<<<< HEAD
 const PORT =  process.env.PORT || 5000;
-=======
-const PORT = process.env.PORT || 5000;
->>>>>>> 9c0bea6a84cbfb24e7b22561fe384e1a3280f032
+
 
 server.listen(PORT, () => console.log(`Server running on ${PORT}`));
